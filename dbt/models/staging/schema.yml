@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: staging
+    database: mythical-legend-450020-c6
+    schema: steam_test
+
+    tables:
+      - name: steam_top_100_daily_test
+      - name: steamspy_game_details_table_test_clean
+      - name: steam_store
+      - name: steam_metadata_table_test__categories
+      - name: steam_metadata_table_test__developers
+      - name: steam_metadata_table_test__dlc
+      - name: steam_metadata_table_test__genres
+      - name: steam_metadata_table_test__publishers
+
+
+
+
+
+
