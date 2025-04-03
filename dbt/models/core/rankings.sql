@@ -6,12 +6,12 @@
 
 with game_details as (
     select *
-    from {{ ref('stg_staging__steamspy_game_details_table_test_clean') }}
+    from {{ ref('steamspy_game_details_table_test_clean') }}
 ),
 
 top_daily_pop as (
     select *
-    from {{ ref('stg_steam_top_100_daily_test') }}
+    from {{ ref('steam_top_100_daily_test') }}
 )
 
 select 

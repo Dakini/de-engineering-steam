@@ -14,9 +14,290 @@ sources:
       - name: steam_metadata_table_test__dlc
       - name: steam_metadata_table_test__genres
       - name: steam_metadata_table_test__publishers
+      - name: steam_user_tag_table
+models:
+  - name: stg_steam_metadata_table_test__genres
+    description: ""
+    columns:
+      - name: id
+        data_type: string
+        description: ""
 
+      - name: description
+        data_type: string
+        description: ""
 
+      - name: _dlt_parent_id
+        data_type: string
+        description: ""
+        tests:
+            - not_null:
+                severity: warn
 
+      - name: _dlt_list_idx
+        data_type: int64
+        description: ""
 
+  - name: stg_steam_metadata_table_test__publishers
+    description: ""
+    columns:
+      - name: value
+        data_type: string
+        description: ""
 
+      - name: _dlt_parent_id
+        data_type: string
+        description: ""
+        tests:
+            - not_null:
+                severity: warn
 
+      - name: _dlt_list_idx
+        data_type: int64
+        description: ""
+
+  - name: stg_steam_metadata_table_test__categories
+    description: ""
+    columns:
+      - name: id
+        data_type: string
+        description: ""
+
+      - name: description
+        data_type: string
+        description: ""
+
+      - name: _dlt_parent_id
+        data_type: string
+        description: ""
+        tests:
+            - not_null:
+                severity: warn
+      - name: _dlt_list_idx
+        data_type: int64
+        description: ""
+
+  - name: stg_steam_store
+    description: ""
+    columns:
+      - name: _dlt_id
+        data_type: string
+        description: ""
+        tests:
+            - unique:
+                severity: warn
+            - not_null:
+                severity: warn
+
+      - name: name
+        data_type: string
+        description: ""
+
+      - name: appid
+        data_type: int64
+        description: ""
+
+      - name: date_added
+        data_type: timestamp
+        description: ""
+
+      - name: required_age
+        data_type: int64
+        description: ""
+
+      - name: is_free
+        data_type: boolean
+        description: ""
+
+      - name: description
+        data_type: string
+        description: ""
+
+      - name: platforms
+        data_type: string
+        description: ""
+
+      - name: metacritic
+        data_type: int64
+        description: ""
+
+      - name: recommendations
+        data_type: int64
+        description: ""
+
+      - name: achievements_number
+        data_type: int64
+        description: ""
+
+      - name: release_date
+        data_type: timestamp
+        description: ""
+
+      - name: controller_support
+        data_type: int64
+        description: ""
+
+      - name: english
+        data_type: boolean
+        description: ""
+
+      - name: release_date_year
+        data_type: int64
+        description: ""
+
+      - name: release_date_month
+        data_type: int64
+        description: ""
+
+      - name: release_date_day
+        data_type: int64
+        description: ""
+
+      - name: reviews
+        data_type: string
+        description: ""
+
+      - name: rn
+        data_type: int64
+        description: ""
+
+  - name: stg_steam_metadata_table_test__dlc
+    description: ""
+    columns:
+      - name: value
+        data_type: string
+        description: ""
+
+      - name: _dlt_parent_id
+        data_type: string
+        description: ""
+        tests:
+            - not_null:
+                severity: warn
+      - name: _dlt_list_idx
+        data_type: int64
+        description: ""
+
+  - name: stg_steam_metadata_table_test__developers
+    description: ""
+    columns:
+      - name: value
+        data_type: string
+        description: ""
+
+      - name: _dlt_parent_id
+        data_type: string
+        description: ""
+        tests:
+            - not_null:
+                severity: warn
+      - name: _dlt_list_idx
+        data_type: int64
+        description: ""
+
+  - name: steamspy_game_details_table_test_clean
+    description: ""
+    columns:
+      - name: tags
+        data_type: string
+        description: ""
+
+      - name: appid
+        data_type: int64
+        description: ""
+
+      - name: name
+        data_type: string
+        description: ""
+
+      - name: date_added
+        data_type: timestamp
+        description: ""
+
+      - name: developer
+        data_type: string
+        description: ""
+
+      - name: publisher
+        data_type: string
+        description: ""
+
+      - name: positive
+        data_type: int64
+        description: ""
+
+      - name: negative
+        data_type: int64
+        description: ""
+
+      - name: average_2weeks
+        data_type: int64
+        description: ""
+
+      - name: median_2weeks
+        data_type: int64
+        description: ""
+
+      - name: price
+        data_type: float64
+        description: ""
+
+      - name: initialprice
+        data_type: float64
+        description: ""
+
+      - name: discount
+        data_type: float64
+        description: ""
+
+      - name: languages
+        data_type: string
+        description: ""
+
+      - name: genre
+        data_type: string
+        description: ""
+
+      - name: owners_lower_range
+        data_type: int64
+        description: ""
+
+      - name: owners_upper_range
+        data_type: int64
+        description: ""
+
+      - name: rn
+        data_type: int64
+        description: ""
+
+  - name: steam_top_100_daily_test
+    description: ""
+    columns:
+      - name: _dlt_id
+        data_type: string
+        description: ""
+        tests:
+            - unique:
+                severity: warn
+            - not_null:
+                severity: warn
+        
+      - name: appid
+        data_type: int64
+        description: ""
+
+      - name: rank
+        data_type: int64
+        description: ""
+
+      - name: peak_in_game
+        data_type: int64
+        description: ""
+
+      - name: date_added
+        data_type: timestamp
+        description: ""
+
+      - name: rn
+        data_type: int64
+        description: ""
