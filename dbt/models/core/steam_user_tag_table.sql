@@ -21,9 +21,11 @@ renamed as (
 select * from renamed
 
 {% if is_incremental() %}
--- Only update rows where the tag or user_count has changed or the appid is new
-and (
-    (appid, tag) not in (select appid, tag from {{ this }})
-    or user_count != (select user_count from {{ this }} where appid = renamed.appid and tag = renamed.tag)
+where not exists (
+    select 1
+    from {{ this }} t
+    where t.appid = renamed.appid
+    and t.tag = renamed.tag
+    and t.user_count = renamed.user_count
 )
 {% endif %}

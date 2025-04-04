@@ -6,7 +6,7 @@
 
 with 
 
-genres as (
+genre_source as (
     select 
         description,
         _dlt_parent_id
@@ -22,14 +22,16 @@ source as (
 
 select 
     s.appid,
-    g.description as genre
-from genres g
+    g.description as category
+from genre_source g
 join source s
     on g._dlt_parent_id = s._dlt_id
 
 {% if is_incremental() %}
-and (
-    s.appid not in (select appid from {{ this }})
-    or g.description != (select genre from {{ this }} where appid = s.appid)
+where not exists (
+    select 1
+    from {{ this }} t
+    where t.appid = s.appid
+    and t.category = g.description
 )
 {% endif %}
