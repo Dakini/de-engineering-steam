@@ -1,0 +1,303 @@
+version: 2
+
+sources:
+  - name: staging
+    database: mythical-legend-450020-c6
+    schema: steam_test
+
+    tables:
+      - name: steam_top_100_daily_test
+      - name: steamspy_game_details_table_test_clean
+      - name: steam_store
+      - name: steam_metadata_table_test__categories
+      - name: steam_metadata_table_test__developers
+      - name: steam_metadata_table_test__dlc
+      - name: steam_metadata_table_test__genres
+      - name: steam_metadata_table_test__publishers
+      - name: steam_user_tag_table
+models:
+  - name: stg_steam_metadata_table_test__genres
+    description: "Relational table to the steam store meta data, with a focus on genres"
+    columns:
+      - name: id
+        data_type: string
+        description: "an id"
+
+      - name: description
+        data_type: string
+        description: "Genres the game belongs to"
+
+      - name: _dlt_parent_id
+        data_type: string
+        description: "related to dlt"
+        tests:
+            - not_null:
+                severity: warn
+
+      - name: _dlt_list_idx
+        data_type: int64
+        description: "related to dlt "
+
+  - name: stg_steam_metadata_table_test__publishers
+    description: "Relational table to the steam store meta data, with a focus on publishers"
+    columns:
+      - name: value
+        data_type: string
+        description: "List of publishers "
+
+      - name: _dlt_parent_id
+        data_type: string
+        description: "related to dlt"
+        tests:
+            - not_null:
+                severity: warn
+
+      - name: _dlt_list_idx
+        data_type: int64
+        description: "related to dlt"
+
+  - name: stg_steam_metadata_table_test__categories
+    description: "Relational table to the steam store meta data, with a focus on categories"
+    columns:
+      - name: id
+        data_type: string
+        description: "an id "
+
+      - name: description
+        data_type: string
+        description: "Categories of the game"
+
+      - name: _dlt_parent_id
+        data_type: string
+        description: "related to dlt "
+        tests:
+            - not_null:
+                severity: warn
+      - name: _dlt_list_idx
+        data_type: int64
+        description: "related to dlt"
+
+  - name: stg_steam_store
+    description: "A table that has pulled the metadata of the games that are the top 100 played games per day"
+    columns:
+      - name: _dlt_id
+        data_type: string
+        description: "unique id for the table"
+        tests:
+            - unique:
+                severity: warn
+            - not_null:
+                severity: warn
+
+      - name: name
+        data_type: string
+        description: "game's name"
+
+      - name: appid
+        data_type: int64
+        description: "Steam Application ID"
+
+      - name: date_added
+        data_type: timestamp
+        description: "date scraped"
+
+      - name: required_age
+        data_type: int64
+        description: "Required age to play the game"
+
+      - name: is_free
+        data_type: boolean
+        description: "is the game free"
+
+      - name: description
+        data_type: string
+        description: "game's description"
+
+      - name: platforms
+        data_type: string
+        description: "Indicates the platforms it is available on "
+
+      - name: metacritic
+        data_type: int64
+        description: "Metacritic score of the game if there"
+
+      - name: recommendations
+        data_type: int64
+        description: "Recommendations numbers"
+
+      - name: achievements_number
+        data_type: int64
+        description: "Total number of attainable achievements"
+
+      - name: release_date
+        data_type: timestamp
+        description: "Date for when the game will release "
+
+      - name: controller_support
+        data_type: int64
+        description: "Type of controller support for the game, if available"
+
+      - name: english
+        data_type: boolean
+        description: "Boolean if the game supports english or not"
+
+      - name: release_date_year
+        data_type: int64
+        description: "Year the game was released"
+
+      - name: release_date_month
+        data_type: int64
+        description: "Month the game was released"
+
+      - name: release_date_day
+        data_type: int64
+        description: "Day the game was released"
+
+      - name: reviews
+        data_type: string
+        description: "Reviews or acclaim summary of the game"
+
+      - name: rn
+        data_type: int64
+        description: "Used to detect if there are ids in the data"
+
+  - name: stg_steam_metadata_table_test__dlc
+    description: "Relational table to the steam store meta data, with a focus on dlc"
+    columns:
+      - name: value
+        data_type: string
+        description: "list of dlc id's associated with the game"
+
+      - name: _dlt_parent_id
+        data_type: string
+        description: "related to dlt"
+        tests:
+            - not_null:
+                severity: warn
+      - name: _dlt_list_idx
+        data_type: int64
+        description: "related to dlt"
+
+  - name: stg_steam_metadata_table_test__developers
+    description: "Relational table to the steam store meta data, with a focus on game developers"
+    columns:
+      - name: value
+        data_type: string
+        description: "List of developers"
+
+      - name: _dlt_parent_id
+        data_type: string
+        description: "related to dlt"
+        tests:
+            - not_null:
+                severity: warn
+      - name: _dlt_list_idx
+        data_type: int64
+        description: "related to dlt"
+
+  - name: steamspy_game_details_table_test_clean
+    description: "Table that contains data pulled from SteamSpy"
+    columns:
+      - name: tags
+        data_type: string
+        description: "game's tags with votes in JSON array."
+
+      - name: appid
+        data_type: int64
+        description: "Steam Application ID"
+
+      - name: name
+        data_type: string
+        description: "game's name"
+
+      - name: date_added
+        data_type: timestamp
+        description: "Date of the scrape"
+
+      - name: developer
+        data_type: string
+        description: "comma separated list of the developers of the game"
+
+      - name: publisher
+        data_type: string
+        description: "comma separated list of the publishers of the game"
+
+      - name: positive
+        data_type: int64
+        description: "number of positive reviews "
+
+      - name: negative
+        data_type: int64
+        description: "number of negative reviews "
+
+      - name: average_2weeks
+        data_type: int64
+        description: "average playtime in the last two weeks. In minutes."
+
+      - name: median_2weeks
+        data_type: int64
+        description: "median playtime in the last two weeks. In minutes"
+
+      - name: price
+        data_type: float64
+        description: "current US price in cents"
+
+      - name: initialprice
+        data_type: float64
+        description: "original US price in cents."
+
+      - name: discount
+        data_type: float64
+        description: "current discount in percents."
+
+      - name: languages
+        data_type: string
+        description: "list of supported languages."
+
+      - name: genre
+        data_type: string
+        description: "list of genres."
+
+      - name: owners_lower_range
+        data_type: int64
+        description: "owners of this application on Steam as a range."
+
+      - name: owners_upper_range
+        data_type: int64
+        description: "owners of this application on Steam as a range."
+
+      - name: rn
+        data_type: int64
+        description: "related to dlt"
+
+  - name: steam_top_100_daily_test
+    description: "table that appends the top 100 played games on steam "
+    columns:
+      - name: _dlt_id
+        data_type: string
+        description: "related to dlt"
+        tests:
+            - unique:
+                severity: warn
+            - not_null:
+                severity: warn
+
+      - name: appid
+        data_type: int64
+        description: "Steam Application ID"
+
+      - name: rank
+        data_type: int64
+        description: "game's current rank"
+
+      - name: peak_in_game
+        data_type: int64
+        description: "peak number of players in the last 24 hours's"
+
+      - name: date_added
+        data_type: timestamp
+        description: "Date of the scrape"
+
+      - name: rn
+        data_type: int64
+        description: "duplicate rows identifier, commonly use rn =1 for this"
