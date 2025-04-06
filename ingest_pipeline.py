@@ -128,7 +128,6 @@ def ingest_data(ingestion_pipeline, game_details_data, metadata_data):
         table_name=os.environ["STEAM_METADATA_TABLE"],
         write_disposition={"disposition": "merge", "strategy": "upsert"},
         primary_key="appid",
-        columns={"tags": {"data_type": "json"}},
     )
 
 

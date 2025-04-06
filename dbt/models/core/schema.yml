@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: steam_user_tag_table
+    description: "User-generated tags applied to Steam games and their counts."
+    columns:
+      - name: appid
+        data_type: int64
+        description: "Steam Application ID"
+
+      - name: tag
+        data_type: string
+        description: "User-submitted tag for a game"
+
+      - name: user_count
+        data_type: int64
+        description: "Number of users who applied this tag"
+
+
+  - name: steam_game_genre
+    description: "Genre classification for each Steam game"
+    columns:
+      - name: appid
+        data_type: int64
+        description: "Steam Application ID"
+
+      - name: category
+        data_type: string
+        description: "Genre name"
+
+
+  - name: steam_game_categories
+    description: "Functional or gameplay-related categories for Steam games"
+    columns:
+      - name: appid
+        data_type: int64
+        description: "Steam Application ID"
+
+      - name: category
+        data_type: string
+        description: "Category label (e.g., Multiplayer, Co-op, etc.)"
+
+
+  - name: rankings
+    description: "Daily top Steam game rankings and metadata"
+    columns:
+      - name: appid
+        data_type: int64
+        description: "Steam Application ID"
+
+      - name: name
+        data_type: string
+        description: "Name of the game"
+
+      - name: price
+        data_type: float64
+        description: "Current price of the game in USD"
+
+      - name: developer
+        data_type: string
+        description: "Game's developer name"
+
+      - name: rank
+        data_type: int64
+        description: "Ranking position in the top 100 list"
+
+      - name: peak_in_game
+        data_type: int64
+        description: "Highest number of concurrent players"
+
+      - name: date_added
+        data_type: timestamp
+        description: "Date of the data capture"
+
+
+  - name: steam_game_dlc
+    description: "Downloadable content associated with each Steam game"
+    columns:
+      - name: appid
+        data_type: int64
+        description: "Steam Application ID"
+
+      - name: dlc
+        data_type: string
+        description: "DLC ID or name associated with the game"
