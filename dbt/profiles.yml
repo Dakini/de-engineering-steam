@@ -3,10 +3,11 @@ default:
     dev:
       dataset: steam_test
       fixed_retries: 1
-      keyfile: <service account json>
+      keyfile: <json file>
       location: europe-west2
       method: service-account
       priority: interactive
+      dataset: dbt_steam
       project: <project id>
       threads: 4
       timeout_seconds: 300

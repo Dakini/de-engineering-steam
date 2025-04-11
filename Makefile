@@ -27,4 +27,4 @@ dbt_setup:
 	cd dbt && dbt deps
 
 bq_dataset: 
-	bq --location=europe-west2  mk --dataset mythical-legend-450020-c6:dbt_steam_2
+	bq --location=europe-west2  mk --dataset mythical-legend-450020-c6:dbt_steam
