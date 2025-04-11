@@ -34,13 +34,13 @@ To enable:
 2.  Initialize the SDK:
 
 ```bash
-    gcloud init
+gcloud init
 ```
 
 3.  Authenticate with your Google account:
 
 ```bash
-   gcloud auth login
+gcloud auth login
 ```
 
 ### Step 4: Create a Service Account
@@ -64,7 +64,8 @@ To enable:
 3.  Click **\*Add Key** > **Create new key**
 4.  Choose **JSON** format
 5.  Click **Create** to download the key file
-    ⚠️ **Important**: Add this key to .gitignore. Never commit it to version control.
+
+⚠️ **Important**: Add this key to .gitignore. Never commit it to version control.
 
 ## Project Configuration
 
@@ -87,13 +88,13 @@ source myenv/bin/activate
 2.  Install Pipenv:
 
 ```bash
-   pip install pipenv
+pip install pipenv
 ```
 
 3.  Install project dependencies:
 
 ```bash
-   pipenv install
+pipenv install
 ```
 
 4.  Create a .env file in the project root with the following content:
@@ -122,10 +123,9 @@ STEAM_USER_TAG_TABLE=steam_user_tag_table
 2. Modify the directory path to match your local environment:
 
 ```yaml
-
-        pull:
-    - prefect.deployments.steps.set_working_directory:
-        directory: /your/local/path/to/de-engineering-steam/ingestion
+pull:
+  - prefect.deployments.steps.set_working_directory:
+      directory: /your/local/path/to/de-engineering-steam/ingestion
 ```
 
 #### DLT Configuration
@@ -164,8 +164,8 @@ steam:
 3. Update the `Makefile`, for creating the dataset to point to the correct project id
 
 ```bash
- bq_dataset:
-	bq --location=europe-west2  mk --dataset <project id>:dbt_steam  # Change this
+bq_dataset:
+    bq --location=europe-west2  mk --dataset <project id>:dbt_steam  # Change this
 ```
 
 4. Update `dbt/models/staging/schema.yml`
@@ -197,19 +197,19 @@ gcloud auth list
 3. ### Check IAM Policy
 
 ```bash
-   gcloud projects get-iam-policy YOUR_PROJECT_ID
+gcloud projects get-iam-policy YOUR_PROJECT_ID
 ```
 
 4. ### Verify BigQuery Access
 
 ```bash
-   bq ls
+bq ls
 ```
 
 5. ### Test Prefect Setup
 
 ```bash
-    prefect work-pool ls
+prefect work-pool ls
 ```
 
 6. ### Validate .env is Loaded
