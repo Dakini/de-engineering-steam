@@ -9,6 +9,10 @@ manual_ingest:
 manual_clean:
 	cd ingestion && \
 	prefect deployment run 'run-clean-dataworkflow/SteamClean'
+
+manual_dbt:
+	cd ingestion && \
+	prefect deployment run 'dbt-flow/Dbtrun'
 prefect_stop:
 	prefect server stop
 

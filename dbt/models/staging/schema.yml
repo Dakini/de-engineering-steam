@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: staging
-    database: mythical-legend-450020-c6
+    database: <GCP_PROJECT_ID>
     schema: steam_test
 
     tables:

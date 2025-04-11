@@ -85,6 +85,11 @@ cd de-engineering-steam
 ### Step 2: Environment Setup
 
 1.  Install Python 3.13
+
+```bash
+python3.12 -m venv myenv
+```
+
 2.  Install Pipenv:
 
 ```sh
@@ -98,6 +103,10 @@ cd de-engineering-steam
 ```
 
 4.  Create a .env file in the project root with the following content:
+
+```bash
+touch .env
+```
 
     INGEST_PIPELINE=steam_ingest
     DATASET=dbt_steam
@@ -143,13 +152,13 @@ project_id = "<project_id from services.json>"
 
 1.  Open dbt/profiles.yml:
 
-```yaml
+yaml
+
 # filepath: /your/local/path/to/de-engineering-steam/dbt/profiles.yml
-```
 
 2.  Update the project ID:
 
-```yaml
+yaml
 steam:
 outputs:
 dev:
@@ -159,11 +168,33 @@ dataset: dbt_steam
 threads: 4
 keyfile: /path/to/your/service-account-key.json # Change this
 location: europe-west2
+
+3. Update the makefile, for creating the dataset to point to the correct project id
+
+```bash
+ bq_dataset:
+	bq --location=europe-west2  mk --dataset <project id>:dbt_steam #change this
+```
+
+4. Update the project id in dbt/models/staging/schema.yml
+
+```
+sources:
+  - name: staging
+    database: PROJECT ID #change this to the google project id
+    schema: steam_test
 ```
 
 ## Verifying Setup
 
 After completing the prerequisites, verify your setup:
+
+First go to the root directory, install what we need for pipenv and run the shell command
+
+```bash
+make setup
+pipenv shell
+```
 
 1.  Confirm GCP authentication:
 

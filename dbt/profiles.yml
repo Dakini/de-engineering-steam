@@ -8,7 +8,7 @@ default:
       method: service-account
       priority: interactive
       dataset: dbt_steam
-      project: YOUR_GCP_PROJECT_ID # Change this
+      project: "GCP_PPROJECT_ID" # Change this
       threads: 4
       timeout_seconds: 300
       type: bigquery
