@@ -15,7 +15,7 @@ push: null
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
   - prefect.deployments.steps.set_working_directory:
-      directory: /Users/davidgillespie/projects/de-engineering-steam/ingestion
+      directory: /your/local/path/to/de-engineering-steam/ingestion
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
@@ -49,6 +49,23 @@ deployments:
       job_variables: {}
     schedules:
       - cron: 10 0 * * *
+        timezone: null
+        day_or: true
+        active: true
+
+  - name: Dbtrun
+    version: null
+    tags: []
+    concurrency_limit: null
+    description: Orchestratees the dbt run process using Prefect
+    entrypoint: dbt_run.py:dbt_flow
+    parameters: {}
+    work_pool:
+      name: steam_de
+      work_queue_name: default
+      job_variables: {}
+    schedules:
+      - cron: 30 0 * * *
         timezone: null
         day_or: true
         active: true

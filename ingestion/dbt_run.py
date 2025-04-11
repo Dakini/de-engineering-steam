@@ -1,17 +1,17 @@
-from prefect_dbt.cli.commands import DbtCoreOperation
-from prefect import flow
+from prefect import flow, task
+import subprocess
 
+@task
+def run_dbt_command(command: str):
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    print(result.stdout)
+    if result.returncode != 0:
+        raise Exception(f"DBT command failed: {result.stderr}")
 
 @flow
-def trigger_dbt_flow() -> str:
-    result = DbtCoreOperation(
-        commands=["dbt build --vars '{'is_test_run': false}'"],
-        project_dir="../dbt",
-        profiles_dir="~/dbt",
-        overwrite_profiles=True,
-    ).run()
-    return result
+def dbt_flow():
+    run_dbt_command("cd ../dbt && dbt build --vars '{'is_test_run': false}'")
 
 
 if __name__ == "__main__":
-    trigger_dbt_flow()
+    dbt_flow()

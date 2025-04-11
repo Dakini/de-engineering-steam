@@ -14,6 +14,7 @@ dlt = {extras = ["bigquery"], version = "*"}
 dbt-core = "*"
 dbt-bigquery = "*"
 prefect-dbt = "*"
+lxml = "*"
 
 [dev-packages]
 black = "*"

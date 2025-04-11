@@ -1,1 +1,426 @@
-# de-engineering-steam
+
+ # Steam Data Engineering Project 
+ 
+ This project implements a complete data pipeline for collecting, processing, and analyzing Steam game data. It uses modern data engineering tools including Prefect for workflow orchestration, DLT (Data Load Tool) for data loading, and dbt (data build tool) for transformation. It uses a scheduler to pull data every evening to update tables within big query, and then passed to Google Looker Studio for providing stats on the top popular games with the most concurrent players in the day. 
+ 
+![](images/image.png)
+ 
+ ## Goal 
+ The goal of this project is to pull the top most played games, to spot trends with the most played games based on concurrent players, and then analysing the trends from the data, such as game, and rank, number of players for those top games, the splpit of players over different developers, and even the likes of distribution of discount vs positive reviews. 
+ 
+ ## Project Overview 
+ 
+ This pipeline collects data from multiple Steam-related APIs: 
+ - Daily top 100 played games 
+ - Game details from SteamSpy 
+ - Game metadata from the Steam Store 
+ 
+ The data is processed, cleaned, and stored in BigQuery, then transformed using dbt models to create analytics-ready tables. 
+ 
+ ## Project Structure 
+ 
+ 
+ .  
+ ├── ingestion/            # Data ingestion code  
+ │   ├── src/              # Source modules  
+ │   │   ├── apis/         # API clients for different data sources  
+ │   │   ├── helpers/      # Helper utilities  
+ │   │   └── models/       # Pydantic models for data validation  
+ │   ├── ingest_pipeline.py  # Main ingestion workflow  
+ │   ├── clean_pipeline.py   # Data cleaning workflow  
+ │   └── dbt_run.py          # dbt execution workflow  
+ ├── dbt/                  # dbt project  
+ │   ├── models/           # dbt models  
+ │   │   ├── staging/      # Staging models  
+ │   │   ├── core/         # Core models  
+ │   │   └── dashboard/    # Dashboard/reporting models  
+ │   ├── macros/           # dbt macros  
+ │   └── dbt_project.yml   # dbt project configuration  
+ ├── Pipfile               # Pipenv dependencies  
+ ├── Makefile              # Utility commands  
+ └── requirements.txt      # Core requirements  
+ 
+ 
+ ## Getting Started 
+ 
+ ### Steam Data Engineering Architecture 
+ The source data is primarily from multiple Steam-related APIs, providing game statistics, metadata, and user information. 
+ 
+ Batch pipeline is implemented using Google Cloud Platform (GCP). A batch approach is appropriate as the Steam stats typically update daily rather than requiring real-time processing. 
+ 
+ Prefect is used for workflow orchestration, providing scheduling, monitoring, and error handling for the entire data pipeline. 
+ 
+ The pipeline follows a medallion architecture with bronze, silver, and gold data layers: 
+ 
+ Bronze Layer (Raw Data): 
+ 
+ - Data is ingested from multiple Steam APIs (Steam Top 100, SteamSpy, Steam Store) 
+ - DLT (Data Load Tool) handles the API calls and initial data extraction 
+ - Raw data is loaded directly into BigQuery staging tables 
+ 
+ Silver Layer (Cleaned Data): 
+ 
+ - A dedicated cleaning workflow processes the raw data 
+ - Data is cleaned, standardized, and normalized 
+ - Game tags and additional attributes are extracted from raw metadata 
+ - Results are stored in separate cleaned tables in BigQuery 
+ 
+ Gold Layer (Analytics-Ready Data): 
+ 
+ - dbt transforms the silver layer data into analytics-ready models 
+ - Models include staging views, core dimensional models, and dashboard-specific models 
+ - Data is structured for optimal query performance for the dashboard 
+ - Final tables are saved back to BigQuery 
+ 
+ The pipeline runs on a scheduled basis, with the ingestion workflow running daily at midnight, followed by the cleaning workflow at 12:10 AM. This ensures fresh data is available each morning for analysis. 
+ 
+ dbt models implement proper transformations including: 
+ 
+ - Creation of proper relationships between different data sources 
+ - Calculation of derived metrics like engagement rate and popularity trends 
+ - Development of consistent dimensions for game attributes, developers, and tags 
+ 
+ Dashboard visualizations are built in Google Looker Studio, connected directly to the gold layer tables in BigQuery. This provides insights into: 
+ 
+ - Top games by concurrent players 
+ - Player distribution across different game developers 
+ - Correlation between discounts and positive reviews 
+ - Trending games over time 
+ 
+ The implementation is entirely cloud-based on GCP, making it scalable and team-friendly. The architecture allows for future extensions such as additional data sources or more complex transformation logic. 
+ 
+ Python dependencies are managed through Pipenv, ensuring consistent environments across development and production. The project follows software engineering best practices with modular code organization and separation of concerns between ingestion, cleaning, and transformation stages. 
+ 
+ ### Prerequisites 
+ 
+ - Python 3.13 
+ - Pipenv 
+ - Google Cloud account with BigQuery access 
+ - Service account with appropriate permissions 
+ 
+ ### Installation 
+ 
+ 1. Clone this repository 
+ 
+ 2. Install dependencies with Pipenv: 
+ 
+   pipenv install 
+   
+ 
+ 3. Activate the virtual environment: 
+ 
+   pipenv shell 
+   
+ 
+ 4. Set up your environment variables (create a .env file): 
+ 
+   INGEST_PIPELINE=steam_ingest 
+   DATASET=steam_test 
+   STEAM_TOP_100_TABLE=steam_top_100_daily_test 
+   STEAMSPY_GAME_DETAILS_TABLE=steamspy_game_details_table_test 
+   STEAM_METADATA_TABLE=steam_metadata_table_test 
+   STEAM_METADATA_TABLE_CLEAN=steam_store 
+   STEAMSPY_GAME_DETAILS_TABLE_CLEAN=steamspy_game_details_table_test_clean 
+   STEAM_USER_TAG_TABLE=steam_user_tag_table 
+   
+ 
+ 5. Set up BigQuery dataset: 
+ 
+   make bq_dataset 
+   
+ 
+ ## Running the Pipeline 
+ 
+ ### Setting up Prefect 
+ 
+ Use the provided Makefile command to set up Prefect: 
+ 
+ 
+ make prefect_setup 
+ 
+ 
+ This will: 
+ 1. Start a Prefect server 
+ 2. Configure the API URL 
+ 3. Create a work queue 
+ 4. Start a worker 
+ 5. Deploy the workflows 
+ 
+ ### Running the Ingestion Pipeline Manually 
+ 
+ To run the data ingestion pipeline: 
+ 
+ 
+ make manual_ingest 
+ 
+ 
+ ### Running the Data Cleaning Pipeline Manually 
+ 
+ To run the data cleaning pipeline: 
+ 
+ 
+ make manual_clean 
+ 
+ 
+ ### Setting up dbt 
+ 
+ Install dbt dependencies: 
+ 
+ 
+ make dbt_setup 
+ 
+ 
+ Run dbt models (from the dbt directory): 
+ 
+ 
+ cd dbt && dbt run 
+ 
+ 
+ ## Pipeline Workflow 
+ 
+ 1. Data Ingestion: 
+ - Fetch top 100 played games on Steam 
+ - Extract unique app IDs 
+ - Fetch detailed game data from SteamSpy 
+ - Fetch metadata from Steam Store API 
+ - Load data into BigQuery staging tables 
+ 
+ 2. Data Cleaning: 
+ - Clean and standardize SteamSpy data 
+ - Process Steam Store metadata 
+ - Extract game tags and additional attributes 
+ - Load cleaned data into separate tables 
+ 
+ 3. Data Transformation (dbt): 
+ - Create staging views 
+ - Build core dimensional models 
+ - Develop dashboard/reporting models 
+ 
+ ## Technologies Used 
+ 
+ - Prefect: Workflow orchestration 
+ - DLT: Data loading tool for ingesting data into BigQuery 
+ - dbt: Data transformation and modeling 
+ - BigQuery: Data warehouse 
+ - Pipenv: Python dependency management 
+ - Pydantic: Data validation and settings management 
+ 
+ ## Development 
+ 
+ To stop the Prefect server: 
+ 
+ 
+ make prefect_stop 
+ 
+ 
+ For running dbt tests: 
+ 
+ 
+ cd dbt && dbt test 
+ 
+ 
+ ## License 
+ 
+ This project is licensed under the MIT License - see the LICENSE file for details.
+ . 
+ ├── ingestion/ # Data ingestion code 
+ │ ├── src/ # Source modules 
+ │ │ ├── apis/ # API clients for different data sources 
+ │ │ ├── helpers/ # Helper utilities 
+ │ │ └── models/ # Pydantic models for data validation 
+ │ ├── ingest_pipeline.py # Main ingestion workflow 
+ │ ├── clean_pipeline.py # Data cleaning workflow 
+ │ └── dbt_run.py # dbt execution workflow 
+ ├── dbt/ # dbt project 
+ │ ├── models/ # dbt models 
+ │ │ ├── staging/ # Staging models 
+ │ │ ├── core/ # Core models 
+ │ │ └── dashboard/ # Dashboard/reporting models 
+ │ ├── macros/ # dbt macros 
+ │ └── dbt_project.yml # dbt project configuration 
+ ├── Pipfile # Pipenv dependencies 
+ ├── Makefile # Utility commands 
+ └── requirements.txt # Core requirements 
+ 
+  
+ ## Getting Started  
+  
+ ### Steam Data Engineering Architecture 
+ The source data is primarily from multiple Steam-related APIs, providing game statistics, metadata, and user information. 
+ 
+ Batch pipeline is implemented using Google Cloud Platform (GCP). A batch approach is appropriate as the Steam stats typically update daily rather than requiring real-time processing. 
+ 
+ Prefect is used for workflow orchestration, providing scheduling, monitoring, and error handling for the entire data pipeline. 
+ 
+ The pipeline follows a medallion architecture with bronze, silver, and gold data layers: 
+ 
+ Bronze Layer (Raw Data): 
+ 
+ - Data is ingested from multiple Steam APIs (Steam Top 100, SteamSpy, Steam Store) 
+ - DLT (Data Load Tool) handles the API calls and initial data extraction 
+ - Raw data is loaded directly into BigQuery staging tables 
+ 
+ Silver Layer (Cleaned Data): 
+ 
+ - A dedicated cleaning workflow processes the raw data 
+ - Data is cleaned, standardized, and normalized 
+ - Game tags and additional attributes are extracted from raw metadata 
+ - Results are stored in separate cleaned tables in BigQuery 
+ 
+ Gold Layer (Analytics-Ready Data): 
+ 
+ - dbt transforms the silver layer data into analytics-ready models 
+ - Models include staging views, core dimensional models, and dashboard-specific models 
+ - Data is structured for optimal query performance for the dashboard 
+ - Final tables are saved back to BigQuery 
+ 
+ The pipeline runs on a scheduled basis, with the ingestion workflow running daily at midnight, followed by the cleaning workflow at 12:10 AM. This ensures fresh data is available each morning for analysis. 
+ 
+ dbt models implement proper transformations including: 
+ 
+ - Creation of proper relationships between different data sources 
+ - Calculation of derived metrics like engagement rate and popularity trends 
+ - Development of consistent dimensions for game attributes, developers, and tags 
+ 
+ Dashboard visualizations are built in Google Looker Studio, connected directly to the gold layer tables in BigQuery. This provides insights into: 
+ 
+ - Top games by concurrent players 
+ - Player distribution across different game developers 
+ - Correlation between discounts and positive reviews 
+ - Trending games over time 
+ 
+ The implementation is entirely cloud-based on GCP, making it scalable and team-friendly. The architecture allows for future extensions such as additional data sources or more complex transformation logic. 
+ 
+ Python dependencies are managed through Pipenv, ensuring consistent environments across development and production. The project follows software engineering best practices with modular code organization and separation of concerns between ingestion, cleaning, and transformation stages. 
+ 
+ ### Prerequisites  
+  
+ - Python 3.13  
+ - [Pipenv](https://pipenv.pypa.io/)  
+ - Google Cloud account with BigQuery access  
+ - Service account with appropriate permissions  
+  
+ ### Installation  
+  
+ 1. Clone this repository  
+  
+ 2. Install dependencies with Pipenv:  
+   
+ pipenv install 
+ 
+  
+ 3. Activate the virtual environment:  
+   
+ pipenv shell 
+ 
+  
+ 4. Set up your environment variables (create a `.env` file):  
+   
+ INGEST_PIPELINE=steam_ingest 
+ DATASET=steam_test 
+ STEAM_TOP_100_TABLE=steam_top_100_daily_test 
+ STEAMSPY_GAME_DETAILS_TABLE=steamspy_game_details_table_test 
+ STEAM_METADATA_TABLE=steam_metadata_table_test 
+ STEAM_METADATA_TABLE_CLEAN=steam_store 
+ STEAMSPY_GAME_DETAILS_TABLE_CLEAN=steamspy_game_details_table_test_clean 
+ STEAM_USER_TAG_TABLE=steam_user_tag_table 
+ 
+  
+ 5. Set up BigQuery dataset:  
+   
+ make bq_dataset 
+ 
+  
+ ## Running the Pipeline  
+  
+ ### Setting up Prefect  
+  
+ Use the provided Makefile command to set up Prefect:  
+  
+ 
+ make prefect_setup 
+ 
+  
+ This will:  
+ 1. Start a Prefect server  
+ 2. Configure the API URL  
+ 3. Create a work queue  
+ 4. Start a worker  
+ 5. Deploy the workflows  
+  
+ ### Running the Ingestion Pipeline Manually  
+  
+ To run the data ingestion pipeline:  
+  
+ 
+ make manual_ingest 
+ 
+  
+ ### Running the Data Cleaning Pipeline Manually  
+  
+ To run the data cleaning pipeline:  
+  
+ 
+ make manual_clean 
+ 
+  
+ ### Setting up dbt  
+  
+ Install dbt dependencies:  
+  
+ 
+ make dbt_setup 
+ 
+  
+ Run dbt models (from the dbt directory):  
+  
+ 
+ cd dbt && dbt run 
+ 
+  
+ ## Pipeline Workflow  
+  
+ 1. **Data Ingestion**:  
+    - Fetch top 100 played games on Steam  
+    - Extract unique app IDs  
+    - Fetch detailed game data from SteamSpy  
+    - Fetch metadata from Steam Store API  
+    - Load data into BigQuery staging tables  
+  
+ 2. **Data Cleaning**:  
+    - Clean and standardize SteamSpy data  
+    - Process Steam Store metadata  
+    - Extract game tags and additional attributes  
+    - Load cleaned data into separate tables  
+  
+ 3. **Data Transformation** (dbt):  
+    - Create staging views  
+    - Build core dimensional models  
+    - Develop dashboard/reporting models  
+  
+ ## Technologies Used  
+  
+ - **Prefect**: Workflow orchestration  
+ - **DLT**: Data loading tool for ingesting data into BigQuery  
+ - **dbt**: Data transformation and modeling  
+ - **BigQuery**: Data warehouse  
+ - **Pipenv**: Python dependency management  
+ - **Pydantic**: Data validation and settings management  
+  
+ ## Development  
+  
+ To stop the Prefect server:  
+  
+ 
+ make prefect_stop 
+ 
+  
+ For running dbt tests:  
+  
+ 
+ cd dbt && dbt test 
+ ``` 
+ 
+ ## License 
+ 
+ This project is licensed under the MIT License - see the LICENSE file for details.
