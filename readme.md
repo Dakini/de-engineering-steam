@@ -6,7 +6,7 @@ This project implements a complete data pipeline for collecting, processing, and
 
 ## Goal
 
-The goal of this project is to pull the top most played games, to spot trends with the most played games based on concurrent players, and then analysing the trends from the data, such as game, and rank, number of players for those top games, the splpit of players over different developers, and even the likes of distribution of discount vs positive reviews.
+The goal of this project is to ingest and and then analyse trends such as game rankings, concurrent player counts, developer-level player distribution, and the relationship between discounts and review sentiment. These include trends in game popularity, developer distribution, discount-to-review correlations, and more.
 
 The dashboard can be found [here](https://lookerstudio.google.com/u/0/reporting/29bd12eb-bffa-4aa8-be8a-6c1439f8241c/page/xLnFF)
 
@@ -92,7 +92,13 @@ Dashboard visualizations are built in Google Looker Studio, connected directly t
 
 The implementation is entirely cloud-based on GCP, making it scalable and team-friendly. The architecture allows for future extensions such as additional data sources or more complex transformation logic.
 
-Python dependencies are managed through Pipenv, ensuring consistent environments across development and production. The project follows software engineering best practices with modular code organization and separation of concerns between ingestion, cleaning, and transformation stages.
+The codebase follows software engineering best practices, including:
+
+- Type-validated data models using Pydantic
+- Modular and reusable components for ingestion and transformation
+- Separation of orchestration (Prefect), loading (DLT), and transformation (dbt)
+- Cloud-native deployments on GCP with infrastructure-as-code via Makefile
+- Automated testing for dbt models using dbt tests
 
 ### Prerequisites
 
@@ -101,7 +107,7 @@ Python dependencies are managed through Pipenv, ensuring consistent environments
 - Google Cloud account with BigQuery access
 - Service account with appropriate permissions
 
-Before progressing any further please follow the preiqusition [here](Prerequisites.md)
+Before progressing any further please follow the prerequisite [here](Prerequisites.md)
 
 ### Continue installation
 
@@ -133,26 +139,32 @@ This will:
 4.  Start a worker
 5.  Deploy the workflows
 
-You will be able to see the deplpoyments of the flows on the **prefect server**: **localhost:4200** where you can see the deployments
+You will be able to see the deployments of the flows on the **prefect server**: **localhost:4200** where you can see the deployments
 ![alt text](images/image2.png)
 
 ### Running the Ingestion Pipeline Manually
 
 To run the data ingestion pipeline:
 
+```bash
 make manual_ingest
+```
 
 ### Running the Data Cleaning Pipeline Manually
 
 To run the data cleaning pipeline:
 
+```bash
 make manual_clean
+```
 
 ### Running the DBT pipeline
 
 To run the dbt ETL pipeline:
 
+```bash
 make manual_dbt
+```
 
 After the flows have been run, you can see their flows in the flow, part of the prefect server.
 
@@ -198,7 +210,16 @@ If you click on one, of the flows you can see the graphs
 
 To stop the Prefect server:
 
+```bash
 make prefect_stop
+```
+
+### Future Enhancements
+
+- Add support for real-time data ingestion with Kafka and BigQuery streaming inserts
+- Integrate ML models to predict trending games based on metadata
+- Extend the dashboard to include genre-based breakdowns and seasonal trends
+- Build alerting workflows for anomalies in player activity using Prefect triggers
 
 ## License
 
