@@ -11,6 +11,9 @@ requests = "*"
 beautifulsoup4 = "*"
 google-cloud-bigquery-storage = "*"
 dlt = {extras = ["bigquery"], version = "*"}
+dbt-core = "*"
+dbt-bigquery = "*"
+prefect-dbt = "*"
 
 [dev-packages]
 black = "*"

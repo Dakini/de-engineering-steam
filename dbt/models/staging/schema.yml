@@ -31,8 +31,8 @@ models:
         data_type: string
         description: "related to dlt"
         tests:
-            - not_null:
-                severity: warn
+          - not_null:
+              severity: warn
 
       - name: _dlt_list_idx
         data_type: int64
@@ -49,8 +49,8 @@ models:
         data_type: string
         description: "related to dlt"
         tests:
-            - not_null:
-                severity: warn
+          - not_null:
+              severity: warn
 
       - name: _dlt_list_idx
         data_type: int64
@@ -71,8 +71,8 @@ models:
         data_type: string
         description: "related to dlt "
         tests:
-            - not_null:
-                severity: warn
+          - not_null:
+              severity: warn
       - name: _dlt_list_idx
         data_type: int64
         description: "related to dlt"
@@ -84,10 +84,10 @@ models:
         data_type: string
         description: "unique id for the table"
         tests:
-            - unique:
-                severity: warn
-            - not_null:
-                severity: warn
+          - unique:
+              severity: warn
+          - not_null:
+              severity: warn
 
       - name: name
         data_type: string
@@ -172,8 +172,8 @@ models:
         data_type: string
         description: "related to dlt"
         tests:
-            - not_null:
-                severity: warn
+          - not_null:
+              severity: warn
       - name: _dlt_list_idx
         data_type: int64
         description: "related to dlt"
@@ -189,8 +189,8 @@ models:
         data_type: string
         description: "related to dlt"
         tests:
-            - not_null:
-                severity: warn
+          - not_null:
+              severity: warn
       - name: _dlt_list_idx
         data_type: int64
         description: "related to dlt"
@@ -277,10 +277,10 @@ models:
         data_type: string
         description: "related to dlt"
         tests:
-            - unique:
-                severity: warn
-            - not_null:
-                severity: warn
+          - unique:
+              severity: warn
+          - not_null:
+              severity: warn
 
       - name: appid
         data_type: int64
