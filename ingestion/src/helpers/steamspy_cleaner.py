@@ -1,12 +1,21 @@
 import pandas as pd
 import logging
 from typing import Dict, List, Union
-import ast
+import hashlib
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
+
+
+def get_tag_unique_ids(df):
+    unique_id = [
+        hashlib.md5(f"{f.appid}{f.tag}".encode("utf-16")).hexdigest()
+        for f in df.itertuples()
+    ]
+    df["unique_id"] = unique_id
+    return df
 
 
 class GameDetailsProcessor:
@@ -49,6 +58,7 @@ class GameDetailsProcessor:
         self.tags = pd.DataFrame(
             {"appid": appids, "tag": tags, "user_count": user_count}
         )
+        self.tags = get_tag_unique_ids(self.tags)
 
     def clean(self, details: pd.DataFrame, drop_cols: List[str] = None) -> pd.DataFrame:
         """

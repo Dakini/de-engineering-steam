@@ -68,7 +68,9 @@ async def end() -> None:
 
 
 @task
-async def ingest_clean_data(pipeline, data, table_name, columns=None, name=""):
+async def ingest_clean_data(
+    pipeline, data, table_name, columns=None, unique_id="appid"
+):
     """Ingesting clean data into tables"""
 
     logger.info(f"Ingesting data rows into {table_name}...")
@@ -79,7 +81,7 @@ async def ingest_clean_data(pipeline, data, table_name, columns=None, name=""):
                 data,
                 table_name=table_name,
                 write_disposition={"disposition": "merge", "strategy": "upsert"},
-                primary_key="appid",
+                primary_key=unique_id,
                 columns=columns,
             )
         else:
@@ -87,7 +89,7 @@ async def ingest_clean_data(pipeline, data, table_name, columns=None, name=""):
                 data,
                 table_name=table_name,
                 write_disposition={"disposition": "merge", "strategy": "upsert"},
-                primary_key="appid",
+                primary_key=unique_id,
             )
         logger.info(f"Successfully ingested data into {table_name}")
     except Exception as e:
@@ -98,22 +100,59 @@ async def ingest_clean_data(pipeline, data, table_name, columns=None, name=""):
 @dlt.resource(name="steam_spy")
 def yield_steamspy(data):
     for _data in data.to_dict(orient="records"):
+        logger.info(f"We are logging steam_store {_data}")
         yield _data
 
 
 @dlt.resource(name="steam_store")
 def yield_steamstore(data):
     for _data in data.to_dict(orient="records"):
+        logger.info(f"We are logging  steam_store {_data}")
         yield _data
 
 
 @dlt.resource(name="steam_user_tags")
 def yield_tags(data):
     for _data in data.to_dict(orient="records"):
+        logger.info(f"We are logging steam_user_tags{_data}")
         yield _data
 
 
-@flow(task_runner=ConcurrentTaskRunner())
+@task
+async def ingest_cleaned_steam_spy(pipeline, data, table_name) -> None:
+    """Final Logging message"""
+    logger.info("Ingesting Cleaned SteamSpy Data")
+    await ingest_clean_data(
+        pipeline,
+        data,
+        table_name,
+    )
+
+
+@task
+async def ingest_cleaned_steam_store(pipeline, data, table_name) -> None:
+    """Final Logging message"""
+    logger.info("Ingesting Cleaned Steamstore data")
+    await ingest_clean_data(
+        pipeline,
+        data,
+        table_name,
+    )
+
+
+@task
+async def ingest_cleaned_tag_data(pipeline, data, table_name) -> None:
+    """Final Logging message"""
+    logger.info("Ingesting Cleaned tag data")
+
+    await ingest_clean_data(
+        pipeline,
+        data,
+        table_name,
+        unique_id="unique_id",
+    )
+
+
 async def clean_data_workflow():
     """Orchestrates the full steam data cleaning process using Prefect"""
     # Step 1 create the pipeline
@@ -136,13 +175,13 @@ async def clean_data_workflow():
             game_cleaner = GameDetailsProcessor()
             cleaned_steam_spy_data, cleaned_tags = game_cleaner.clean(steam_spy_data)
 
-            await ingest_clean_data(
+            await ingest_cleaned_steam_spy(
                 clean_pipeline,
                 yield_steamspy(cleaned_steam_spy_data),
                 steam_spy_clean_table,
             )
 
-            await ingest_clean_data(
+            await ingest_cleaned_tag_data(
                 clean_pipeline,
                 yield_tags(cleaned_tags),
                 steam_user_tag,
@@ -152,7 +191,7 @@ async def clean_data_workflow():
 
             steam_cleaner = SteamStoreProcessor(steam_store_data)
             cleaned_steam_store_data = steam_cleaner.clean()
-            await ingest_clean_data(
+            await ingest_cleaned_steam_store(
                 clean_pipeline,
                 yield_steamstore(cleaned_steam_store_data),
                 steam_store_clean_table,
@@ -165,5 +204,10 @@ async def clean_data_workflow():
         raise
 
 
-if __name__ == "__main__":
+@flow(task_runner=ConcurrentTaskRunner())
+def run_clean_dataworkflow():
     asyncio.run(clean_data_workflow())
+
+
+if __name__ == "__main__":
+    run_clean_dataworkflow()

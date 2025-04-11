@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+prefect = "*"
+pydantic = "*"
+pandas = "*"
+requests = "*"
+beautifulsoup4 = "*"
+google-cloud-bigquery-storage = "*"
+dlt = {extras = ["bigquery"], version = "*"}
+
+[dev-packages]
+black = "*"
+pylint = "*"
+isort = "*"
+
+[requires]
+python_version = "3.13"

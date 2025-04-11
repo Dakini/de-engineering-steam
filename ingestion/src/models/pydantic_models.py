@@ -3,8 +3,6 @@ from typing import Dict, List, Optional, Union
 from datetime import datetime
 import re
 
-from src.helpers.utils import get_date
-
 
 class GameDetails(BaseModel):
     appid: int = Field(..., description="Steam Application ID")

@@ -1,0 +1,1416 @@
+Discovered type 'process' for work pool 'steam_de'.
+Worker 'ProcessWorker b5042eff-e9c4-4597-9a8d-3aa586b8a7c6' started!
+13:40:15.821 | INFO    | prefect.flow_runs.worker - Worker 'ProcessWorker b5042eff-e9c4-4597-9a8d-3aa586b8a7c6' submitting flow run '326b62a1-7410-41c4-940e-71a71bd76246'
+13:40:15.868 | INFO    | prefect.flow_runs.runner - Opening process...
+13:40:15.886 | INFO    | prefect.flow_runs.worker - Completed submission of flow run '326b62a1-7410-41c4-940e-71a71bd76246'
+13:40:16.724 | INFO    | Flow run 'spirited-herring' -  > Running set_working_directory step...
+13:40:17.096 | INFO    | Flow run 'spirited-herring' - Beginning flow run 'spirited-herring' for flow 'stream-data-workflow'
+13:40:17.096 | INFO    | Flow run 'spirited-herring' - View at http://127.0.0.1:4200/runs/flow-run/326b62a1-7410-41c4-940e-71a71bd76246
+13:40:17.206 | INFO    | Task run 'create_ingestion_pipeline-350' - Finished in state Completed()
+13:40:17.505 | INFO    | Task run 'fetch_top_played_100-c57' - Finished in state Completed()
+13:40:27.183 | ERROR   | Task run 'ingest_daily_100-810' - Task run failed with exception: PipelineStepFailed("Pipeline execution failed at stage sync with exception:\n\n<class 'google.auth.exceptions.RefreshError'>\n('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})") - Retries are exhausted
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 784, in _sync_destination
+    remote_state = self._restore_state_from_destination()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 1539, in _restore_state_from_destination
+    state = load_pipeline_state_from_destination(self.pipeline_name, job_client)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/state_sync.py", line 130, in load_pipeline_state_from_destination
+    state = client.get_stored_state(pipeline_name)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/job_client_impl.py", line 432, in get_stored_state
+    with self.sql_client.execute_query(query, pipeline_name) as cur:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/sql_client.py", line 418, in _wrap_gen
+    raise self._make_database_exception(ex)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/sql_client.py", line 416, in _wrap_gen
+    return (yield from f(self, *args, **kwargs))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/impl/bigquery/sql_client.py", line 221, in execute_query
+    curr.execute(query, db_args, job_config=self._session_query or self._default_query)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/_helpers.py", line 496, in with_closed_check
+    return method(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/cursor.py", line 189, in execute
+    self._execute(
+    ~~~~~~~~~~~~~^
+        formatted_operation, parameters, job_id, job_config, parameter_types
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/cursor.py", line 220, in _execute
+    rows = client.query_and_wait(
+        formatted_operation,
+        job_config=config,
+        page_size=self.arraysize,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/client.py", line 3611, in query_and_wait
+    return _job_helpers.query_and_wait(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<9 lines>...
+        max_results=max_results,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/_job_helpers.py", line 534, in query_and_wait
+    return job_retry(do_query)()
+           ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/_job_helpers.py", line 473, in do_query
+    response = retry(client._call_api)(
+        retry=None,  # We're calling the retry decorator ourselves.
+    ...<5 lines>...
+        timeout=api_timeout,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/client.py", line 843, in _call_api
+    return call()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 482, in api_request
+    response = self._make_request(
+        method=method,
+    ...<6 lines>...
+        extra_api_info=extra_api_info,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 341, in _make_request
+    return self._do_request(
+           ~~~~~~~~~~~~~~~~^
+        method, url, headers, data, target_object, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 379, in _do_request
+    return self.http.request(
+           ~~~~~~~~~~~~~~~~~^
+        url=url, method=method, headers=headers, data=data, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/transport/requests.py", line 533, in request
+    self.credentials.before_request(auth_request, method, url, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/credentials.py", line 239, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/credentials.py", line 202, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/credentials.py", line 409, in refresh
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/reauth.py", line 366, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 813, in run_context
+    yield self
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 1389, in run_task_sync
+    engine.call_task_fn(txn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 830, in call_task_fn
+    result = call_with_parameters(self.task.fn, parameters)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+  File "/Users/davidgillespie/projects/de-engineering-steam/ingestion/ingest_pipeline.py", line 77, in ingest_daily_100
+    pipeline.run(
+    ~~~~~~~~~~~~^
+        top_100_data,
+        ^^^^^^^^^^^^^
+        table_name=os.environ["STEAM_TOP_100_TABLE"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 221, in _wrap
+    step_info = f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 270, in _wrap
+    return f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 712, in run
+    self._sync_destination(destination, staging, dataset_name)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 175, in _wrap
+    rv = f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 853, in _sync_destination
+    raise PipelineStepFailed(self, "sync", None, ex, None) from ex
+dlt.pipeline.exceptions.PipelineStepFailed: Pipeline execution failed at stage sync with exception:
+
+<class 'google.auth.exceptions.RefreshError'>
+('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+13:40:27.191 | ERROR   | Task run 'ingest_daily_100-810' - Finished in state Failed("Task run encountered an exception PipelineStepFailed: Pipeline execution failed at stage sync with exception:\n\n<class 'google.auth.exceptions.RefreshError'>\n('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})")
+13:40:27.191 | ERROR   | Flow run 'spirited-herring' - Encountered exception during execution: PipelineStepFailed("Pipeline execution failed at stage sync with exception:\n\n<class 'google.auth.exceptions.RefreshError'>\n('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})")
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 784, in _sync_destination
+    remote_state = self._restore_state_from_destination()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 1539, in _restore_state_from_destination
+    state = load_pipeline_state_from_destination(self.pipeline_name, job_client)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/state_sync.py", line 130, in load_pipeline_state_from_destination
+    state = client.get_stored_state(pipeline_name)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/job_client_impl.py", line 432, in get_stored_state
+    with self.sql_client.execute_query(query, pipeline_name) as cur:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/sql_client.py", line 418, in _wrap_gen
+    raise self._make_database_exception(ex)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/sql_client.py", line 416, in _wrap_gen
+    return (yield from f(self, *args, **kwargs))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/impl/bigquery/sql_client.py", line 221, in execute_query
+    curr.execute(query, db_args, job_config=self._session_query or self._default_query)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/_helpers.py", line 496, in with_closed_check
+    return method(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/cursor.py", line 189, in execute
+    self._execute(
+    ~~~~~~~~~~~~~^
+        formatted_operation, parameters, job_id, job_config, parameter_types
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/cursor.py", line 220, in _execute
+    rows = client.query_and_wait(
+        formatted_operation,
+        job_config=config,
+        page_size=self.arraysize,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/client.py", line 3611, in query_and_wait
+    return _job_helpers.query_and_wait(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<9 lines>...
+        max_results=max_results,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/_job_helpers.py", line 534, in query_and_wait
+    return job_retry(do_query)()
+           ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/_job_helpers.py", line 473, in do_query
+    response = retry(client._call_api)(
+        retry=None,  # We're calling the retry decorator ourselves.
+    ...<5 lines>...
+        timeout=api_timeout,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/client.py", line 843, in _call_api
+    return call()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 482, in api_request
+    response = self._make_request(
+        method=method,
+    ...<6 lines>...
+        extra_api_info=extra_api_info,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 341, in _make_request
+    return self._do_request(
+           ~~~~~~~~~~~~~~~~^
+        method, url, headers, data, target_object, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 379, in _do_request
+    return self.http.request(
+           ~~~~~~~~~~~~~~~~~^
+        url=url, method=method, headers=headers, data=data, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/transport/requests.py", line 533, in request
+    self.credentials.before_request(auth_request, method, url, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/credentials.py", line 239, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/credentials.py", line 202, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/credentials.py", line 409, in refresh
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/reauth.py", line 366, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 763, in run_context
+    yield self
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 1370, in run_flow_sync
+    engine.call_flow_fn()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 783, in call_flow_fn
+    result = call_with_parameters(self.flow.fn, self.parameters)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+  File "/Users/davidgillespie/projects/de-engineering-steam/ingestion/ingest_pipeline.py", line 144, in stream_data_workflow
+    ingest_daily_100(ingestion_pipeline, daily_top_played_games)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/tasks.py", line 1063, in __call__
+    return run_task(
+        task=self,
+    ...<2 lines>...
+        return_type=return_type,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 1604, in run_task
+    return run_task_sync(**kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 1391, in run_task_sync
+    return engine.state if return_type == "state" else engine.result()
+                                                       ~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 484, in result
+    raise self._raised
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 813, in run_context
+    yield self
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 1389, in run_task_sync
+    engine.call_task_fn(txn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 830, in call_task_fn
+    result = call_with_parameters(self.task.fn, parameters)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+  File "/Users/davidgillespie/projects/de-engineering-steam/ingestion/ingest_pipeline.py", line 77, in ingest_daily_100
+    pipeline.run(
+    ~~~~~~~~~~~~^
+        top_100_data,
+        ^^^^^^^^^^^^^
+        table_name=os.environ["STEAM_TOP_100_TABLE"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 221, in _wrap
+    step_info = f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 270, in _wrap
+    return f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 712, in run
+    self._sync_destination(destination, staging, dataset_name)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 175, in _wrap
+    rv = f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 853, in _sync_destination
+    raise PipelineStepFailed(self, "sync", None, ex, None) from ex
+dlt.pipeline.exceptions.PipelineStepFailed: Pipeline execution failed at stage sync with exception:
+
+<class 'google.auth.exceptions.RefreshError'>
+('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+13:40:27.210 | INFO    | Flow run 'spirited-herring' - Finished in state Failed("Flow run encountered an exception: PipelineStepFailed: Pipeline execution failed at stage sync with exception:\n\n<class 'google.auth.exceptions.RefreshError'>\n('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})")
+13:40:27.211 | ERROR   | Flow run 'spirited-herring' - Engine execution exited with unexpected exception
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 784, in _sync_destination
+    remote_state = self._restore_state_from_destination()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 1539, in _restore_state_from_destination
+    state = load_pipeline_state_from_destination(self.pipeline_name, job_client)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/state_sync.py", line 130, in load_pipeline_state_from_destination
+    state = client.get_stored_state(pipeline_name)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/job_client_impl.py", line 432, in get_stored_state
+    with self.sql_client.execute_query(query, pipeline_name) as cur:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/sql_client.py", line 418, in _wrap_gen
+    raise self._make_database_exception(ex)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/sql_client.py", line 416, in _wrap_gen
+    return (yield from f(self, *args, **kwargs))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/impl/bigquery/sql_client.py", line 221, in execute_query
+    curr.execute(query, db_args, job_config=self._session_query or self._default_query)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/_helpers.py", line 496, in with_closed_check
+    return method(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/cursor.py", line 189, in execute
+    self._execute(
+    ~~~~~~~~~~~~~^
+        formatted_operation, parameters, job_id, job_config, parameter_types
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/cursor.py", line 220, in _execute
+    rows = client.query_and_wait(
+        formatted_operation,
+        job_config=config,
+        page_size=self.arraysize,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/client.py", line 3611, in query_and_wait
+    return _job_helpers.query_and_wait(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<9 lines>...
+        max_results=max_results,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/_job_helpers.py", line 534, in query_and_wait
+    return job_retry(do_query)()
+           ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/_job_helpers.py", line 473, in do_query
+    response = retry(client._call_api)(
+        retry=None,  # We're calling the retry decorator ourselves.
+    ...<5 lines>...
+        timeout=api_timeout,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/client.py", line 843, in _call_api
+    return call()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 482, in api_request
+    response = self._make_request(
+        method=method,
+    ...<6 lines>...
+        extra_api_info=extra_api_info,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 341, in _make_request
+    return self._do_request(
+           ~~~~~~~~~~~~~~~~^
+        method, url, headers, data, target_object, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 379, in _do_request
+    return self.http.request(
+           ~~~~~~~~~~~~~~~~~^
+        url=url, method=method, headers=headers, data=data, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/transport/requests.py", line 533, in request
+    self.credentials.before_request(auth_request, method, url, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/credentials.py", line 239, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/credentials.py", line 202, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/credentials.py", line 409, in refresh
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/reauth.py", line 366, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 1527, in run_flow
+    ret_val = run_flow_sync(**kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 1372, in run_flow_sync
+    return engine.state if return_type == "state" else engine.result()
+                                                       ~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 350, in result
+    raise self._raised
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 763, in run_context
+    yield self
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 1370, in run_flow_sync
+    engine.call_flow_fn()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 783, in call_flow_fn
+    result = call_with_parameters(self.flow.fn, self.parameters)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+  File "/Users/davidgillespie/projects/de-engineering-steam/ingestion/ingest_pipeline.py", line 144, in stream_data_workflow
+    ingest_daily_100(ingestion_pipeline, daily_top_played_games)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/tasks.py", line 1063, in __call__
+    return run_task(
+        task=self,
+    ...<2 lines>...
+        return_type=return_type,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 1604, in run_task
+    return run_task_sync(**kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 1391, in run_task_sync
+    return engine.state if return_type == "state" else engine.result()
+                                                       ~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 484, in result
+    raise self._raised
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 813, in run_context
+    yield self
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 1389, in run_task_sync
+    engine.call_task_fn(txn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 830, in call_task_fn
+    result = call_with_parameters(self.task.fn, parameters)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+  File "/Users/davidgillespie/projects/de-engineering-steam/ingestion/ingest_pipeline.py", line 77, in ingest_daily_100
+    pipeline.run(
+    ~~~~~~~~~~~~^
+        top_100_data,
+        ^^^^^^^^^^^^^
+        table_name=os.environ["STEAM_TOP_100_TABLE"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 221, in _wrap
+    step_info = f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 270, in _wrap
+    return f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 712, in run
+    self._sync_destination(destination, staging, dataset_name)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 175, in _wrap
+    rv = f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 853, in _sync_destination
+    raise PipelineStepFailed(self, "sync", None, ex, None) from ex
+dlt.pipeline.exceptions.PipelineStepFailed: Pipeline execution failed at stage sync with exception:
+
+<class 'google.auth.exceptions.RefreshError'>
+('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+13:40:27.215 | ERROR   | prefect.engine - Execution of flow run '326b62a1-7410-41c4-940e-71a71bd76246' exited with unexpected exception
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 784, in _sync_destination
+    remote_state = self._restore_state_from_destination()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 1539, in _restore_state_from_destination
+    state = load_pipeline_state_from_destination(self.pipeline_name, job_client)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/state_sync.py", line 130, in load_pipeline_state_from_destination
+    state = client.get_stored_state(pipeline_name)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/job_client_impl.py", line 432, in get_stored_state
+    with self.sql_client.execute_query(query, pipeline_name) as cur:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/sql_client.py", line 418, in _wrap_gen
+    raise self._make_database_exception(ex)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/sql_client.py", line 416, in _wrap_gen
+    return (yield from f(self, *args, **kwargs))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/destinations/impl/bigquery/sql_client.py", line 221, in execute_query
+    curr.execute(query, db_args, job_config=self._session_query or self._default_query)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/_helpers.py", line 496, in with_closed_check
+    return method(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/cursor.py", line 189, in execute
+    self._execute(
+    ~~~~~~~~~~~~~^
+        formatted_operation, parameters, job_id, job_config, parameter_types
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/dbapi/cursor.py", line 220, in _execute
+    rows = client.query_and_wait(
+        formatted_operation,
+        job_config=config,
+        page_size=self.arraysize,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/client.py", line 3611, in query_and_wait
+    return _job_helpers.query_and_wait(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<9 lines>...
+        max_results=max_results,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/_job_helpers.py", line 534, in query_and_wait
+    return job_retry(do_query)()
+           ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/_job_helpers.py", line 473, in do_query
+    response = retry(client._call_api)(
+        retry=None,  # We're calling the retry decorator ourselves.
+    ...<5 lines>...
+        timeout=api_timeout,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/bigquery/client.py", line 843, in _call_api
+    return call()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 482, in api_request
+    response = self._make_request(
+        method=method,
+    ...<6 lines>...
+        extra_api_info=extra_api_info,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 341, in _make_request
+    return self._do_request(
+           ~~~~~~~~~~~~~~~~^
+        method, url, headers, data, target_object, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/cloud/_http/__init__.py", line 379, in _do_request
+    return self.http.request(
+           ~~~~~~~~~~~~~~~~~^
+        url=url, method=method, headers=headers, data=data, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/transport/requests.py", line 533, in request
+    self.credentials.before_request(auth_request, method, url, request_headers)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/credentials.py", line 239, in before_request
+    self._blocking_refresh(request)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/auth/credentials.py", line 202, in _blocking_refresh
+    self.refresh(request)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/credentials.py", line 409, in refresh
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/reauth.py", line 366, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/google/oauth2/_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/engine.py", line 57, in handle_engine_signals
+    yield
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/engine.py", line 124, in <module>
+    run_flow(flow, flow_run=flow_run, error_logger=run_logger)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 1527, in run_flow
+    ret_val = run_flow_sync(**kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 1372, in run_flow_sync
+    return engine.state if return_type == "state" else engine.result()
+                                                       ~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 350, in result
+    raise self._raised
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 763, in run_context
+    yield self
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 1370, in run_flow_sync
+    engine.call_flow_fn()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/flow_engine.py", line 783, in call_flow_fn
+    result = call_with_parameters(self.flow.fn, self.parameters)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+  File "/Users/davidgillespie/projects/de-engineering-steam/ingestion/ingest_pipeline.py", line 144, in stream_data_workflow
+    ingest_daily_100(ingestion_pipeline, daily_top_played_games)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/tasks.py", line 1063, in __call__
+    return run_task(
+        task=self,
+    ...<2 lines>...
+        return_type=return_type,
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 1604, in run_task
+    return run_task_sync(**kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 1391, in run_task_sync
+    return engine.state if return_type == "state" else engine.result()
+                                                       ~~~~~~~~~~~~~^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 484, in result
+    raise self._raised
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 813, in run_context
+    yield self
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 1389, in run_task_sync
+    engine.call_task_fn(txn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/task_engine.py", line 830, in call_task_fn
+    result = call_with_parameters(self.task.fn, parameters)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+  File "/Users/davidgillespie/projects/de-engineering-steam/ingestion/ingest_pipeline.py", line 77, in ingest_daily_100
+    pipeline.run(
+    ~~~~~~~~~~~~^
+        top_100_data,
+        ^^^^^^^^^^^^^
+        table_name=os.environ["STEAM_TOP_100_TABLE"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 221, in _wrap
+    step_info = f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 270, in _wrap
+    return f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 712, in run
+    self._sync_destination(destination, staging, dataset_name)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 175, in _wrap
+    rv = f(self, *args, **kwargs)
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/dlt/pipeline/pipeline.py", line 853, in _sync_destination
+    raise PipelineStepFailed(self, "sync", None, ex, None) from ex
+dlt.pipeline.exceptions.PipelineStepFailed: Pipeline execution failed at stage sync with exception:
+
+<class 'google.auth.exceptions.RefreshError'>
+('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+13:40:27.935 | ERROR   | prefect.flow_runs.runner - Process for flow run 'spirited-herring' exited with status code: 1
+
+Failed the last 3 attempts. Please check your environment and configuration.
+Examples of recent errors:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 101, in handle_async_request
+    raise exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_backends/auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_backends/anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: All connection attempts failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/services.py", line 64, in critical_service_loop
+    await workload()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 762, in get_and_submit_flow_runs
+    runs_response = await self._get_scheduled_flow_runs()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 921, in _get_scheduled_flow_runs
+    await self.client.get_scheduled_flow_runs_for_work_pool(
+    ...<3 lines>...
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/orchestration/_work_pools/client.py", line 586, in get_scheduled_flow_runs_for_work_pool
+    response = await self.request(
+               ^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/orchestration/base.py", line 53, in request
+    return await self._client.send(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/base.py", line 330, in send
+    response = await self._send_with_retry(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<24 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/base.py", line 250, in _send_with_retry
+    response = await send(request, *send_args, **send_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: All connection attempts failed
+
+
+Backing off due to consecutive errors, using increased interval of  20.0s.
+
+Failed the last 3 attempts. Please check your environment and configuration.
+Examples of recent errors:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 101, in handle_async_request
+    raise exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_backends/auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_backends/anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: All connection attempts failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/services.py", line 64, in critical_service_loop
+    await workload()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 762, in get_and_submit_flow_runs
+    runs_response = await self._get_scheduled_flow_runs()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 921, in _get_scheduled_flow_runs
+    await self.client.get_scheduled_flow_runs_for_work_pool(
+    ...<3 lines>...
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/orchestration/_work_pools/client.py", line 586, in get_scheduled_flow_runs_for_work_pool
+    response = await self.request(
+               ^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/orchestration/base.py", line 53, in request
+    return await self._client.send(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/base.py", line 330, in send
+    response = await self._send_with_retry(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<24 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/base.py", line 250, in _send_with_retry
+    response = await send(request, *send_args, **send_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: All connection attempts failed
+
+
+Backing off due to consecutive errors, using increased interval of  40.0s.
+
+Failed the last 3 attempts. Please check your environment and configuration.
+Examples of recent errors:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 101, in handle_async_request
+    raise exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_backends/auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_backends/anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: All connection attempts failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/services.py", line 64, in critical_service_loop
+    await workload()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 887, in sync_with_backend
+    await self._update_local_work_pool_info()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 772, in _update_local_work_pool_info
+    work_pool = await self._client.read_work_pool(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        work_pool_name=self._work_pool_name
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/orchestration/_work_pools/client.py", line 416, in read_work_pool
+    response = await self.request(
+               ^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/orchestration/base.py", line 53, in request
+    return await self._client.send(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/base.py", line 330, in send
+    response = await self._send_with_retry(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<24 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/base.py", line 250, in _send_with_retry
+    response = await send(request, *send_args, **send_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: All connection attempts failed
+
+
+Backing off due to consecutive errors, using increased interval of  60s.
+
+Failed the last 3 attempts. Please check your environment and configuration.
+Examples of recent errors:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 101, in handle_async_request
+    raise exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_backends/auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_backends/anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: All connection attempts failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/services.py", line 64, in critical_service_loop
+    await workload()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 762, in get_and_submit_flow_runs
+    runs_response = await self._get_scheduled_flow_runs()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 921, in _get_scheduled_flow_runs
+    await self.client.get_scheduled_flow_runs_for_work_pool(
+    ...<3 lines>...
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/orchestration/_work_pools/client.py", line 586, in get_scheduled_flow_runs_for_work_pool
+    response = await self.request(
+               ^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/orchestration/base.py", line 53, in request
+    return await self._client.send(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/base.py", line 330, in send
+    response = await self._send_with_retry(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<24 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/base.py", line 250, in _send_with_retry
+    response = await send(request, *send_args, **send_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: All connection attempts failed
+13:52:34.050 | WARNING | prefect.events.clients - Unable to connect to 'ws://127.0.0.1:4200/api/events/in'. Please check your network settings to ensure websocket connections to the API are allowed. Otherwise event data (including task run data) may be lost. Reason: [Errno 61] Connect call failed ('127.0.0.1', 4200). Set PREFECT_DEBUG_MODE=1 to see the full error.
+13:52:34.054 | ERROR   | GlobalEventLoopThread | prefect._internal.concurrency - Service 'EventsWorker' failed to process item Event(occurred=datetime.datetime(2025, 4, 11, 12, 52, 34, 46215, tzinfo=zoneinfo.ZoneInfo(key='UTC')), event='prefect.worker.stopped', resource=Resource(root={'prefect.resource.id': 'prefect.worker.process.processworker-b5042eff-e9c4-4597-9a8d-3aa586b8a7c6', 'prefect.resource.name': 'ProcessWorker b5042eff-e9c4-4597-9a8d-3aa586b8a7c6', 'prefect.version': '3.3.4', 'prefect.worker-type': 'process'}), related=[RelatedResource(root={'prefect.resource.id': 'prefect.work-pool.b4aead61-d7d2-40f1-aedf-097dd81cfeab', 'prefect.resource.role': 'work-pool', 'prefect.resource.name': 'steam_de'})], payload={}, id=UUID('23791fd1-5f3b-4fc4-aefa-969cbabc568e'), follows=None)
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/cli/_utilities.py", line 44, in wrapper
+  |     return fn(*args, **kwargs)
+  |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/cli/_types.py", line 156, in sync_fn
+  |     return asyncio.run(async_fn(*args, **kwargs))
+  |            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+  |     return runner.run(main)
+  |            ~~~~~~~~~~^^^^^^
+  |   File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+  |     return self._loop.run_until_complete(task)
+  |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  |   File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+  |     return future.result()
+  |            ~~~~~~~~~~~~~^^
+  |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/cli/worker.py", line 169, in start
+  |     await worker.start(
+  |     ...<3 lines>...
+  |     )
+  |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/process.py", line 149, in start
+  |     async with self as worker:
+  |                ^^^^
+  |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/process.py", line 242, in __aexit__
+  |     await super().__aexit__(*exc_info)
+  |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 1349, in __aexit__
+  |     await self.teardown(*exc_info)
+  |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 728, in teardown
+  |     await self._exit_stack.__aexit__(*exc_info)
+  |   File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 768, in __aexit__
+  |     raise exc
+  |   File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 751, in __aexit__
+  |     cb_suppress = await cb(*exc_details)
+  |                   ^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 751, in __aexit__
+    |     cb_suppress = await cb(*exc_details)
+    |                   ^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/runner/runner.py", line 1676, in __aexit__
+    |     await self._runs_task_group.__aexit__(*exc_info)
+    |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 772, in __aexit__
+    |     raise BaseExceptionGroup(
+    |         "unhandled errors in a TaskGroup", self._exceptions
+    |     ) from None
+    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+    +-+---------------- 1 ----------------
+      | Exception Group Traceback (most recent call last):
+      |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/process.py", line 153, in start
+      |     async with anyio.create_task_group() as loops_task_group:
+      |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+      |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 772, in __aexit__
+      |     raise BaseExceptionGroup(
+      |         "unhandled errors in a TaskGroup", self._exceptions
+      |     ) from None
+      | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+      +-+---------------- 1 ----------------
+        | Traceback (most recent call last):
+        |   File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/services.py", line 138, in critical_service_loop
+        |     raise RuntimeError("Service exceeded error threshold.")
+        | RuntimeError: Service exceeded error threshold.
+        +------------------------------------
+
+
+Backing off due to consecutive errors, using increased interval of  80.0s.
+
+Failed the last 3 attempts. Please check your environment and configuration.
+Examples of recent errors:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 101, in handle_async_request
+    raise exc
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_async/connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_backends/auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_backends/anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: All connection attempts failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/utilities/services.py", line 64, in critical_service_loop
+    await workload()
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 762, in get_and_submit_flow_runs
+    runs_response = await self._get_scheduled_flow_runs()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/workers/base.py", line 921, in _get_scheduled_flow_runs
+    await self.client.get_scheduled_flow_runs_for_work_pool(
+    ...<3 lines>...
+    )
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/orchestration/_work_pools/client.py", line 586, in get_scheduled_flow_runs_for_work_pool
+    response = await self.request(
+               ^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/orchestration/base.py", line 53, in request
+    return await self._client.send(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/base.py", line 330, in send
+    response = await self._send_with_retry(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<24 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/prefect/client/base.py", line 250, in _send_with_retry
+    response = await send(request, *send_args, **send_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/davidgillespie/.local/share/virtualenvs/de-engineering-steam-jzXCFMkU/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: All connection attempts failed
+
+
+An exception occurred.
