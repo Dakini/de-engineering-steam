@@ -31,7 +31,7 @@ To enable:
 1.  Download and install the Google Cloud SDK for your operating system:
     https://cloud.google.com/sdk/docs/install
 
-2.  Initialize the SDK:
+2.  Initialize the SDK and if possible select your project:
 
 ```bash
 gcloud init
