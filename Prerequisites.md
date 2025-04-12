@@ -105,7 +105,7 @@ touch .env
 
 ```bash
 INGEST_PIPELINE=steam_ingest
-DATASET=dbt_steam
+DATASET=steam_test
 STEAM_TOP_100_TABLE=steam_top_100_daily
 STEAMSPY_GAME_DETAILS_TABLE=steamspy_game_details_table
 STEAM_METADATA_TABLE=steam_metadata_table
