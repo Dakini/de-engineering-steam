@@ -106,7 +106,7 @@ The codebase follows software engineering best practices, including:
 - Pipenv
 - Google Cloud account with BigQuery access
 - Service account with appropriate permissions
-
+# Do this first!
 Before progressing any further please follow the prerequisite [here](Prerequisites.md)
 
 ### Continue installation
