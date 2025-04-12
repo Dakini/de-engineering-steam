@@ -106,11 +106,11 @@ touch .env
 ```bash
 INGEST_PIPELINE=steam_ingest
 DATASET=steam_test
-STEAM_TOP_100_TABLE=steam_top_100_daily
+STEAM_TOP_100_TABLE=steam_top_100_daily_test
 STEAMSPY_GAME_DETAILS_TABLE=steamspy_game_details_table
-STEAM_METADATA_TABLE=steam_metadata_table
+STEAM_METADATA_TABLE=steam_metadata_table_test
 STEAM_METADATA_TABLE_CLEAN=steam_store
-STEAMSPY_GAME_DETAILS_TABLE_CLEAN=steamspy_game_details_table_clean
+STEAMSPY_GAME_DETAILS_TABLE_CLEAN=steamspy_game_details_table_test_clean
 STEAM_USER_TAG_TABLE=steam_user_tag_table
 
 ```
