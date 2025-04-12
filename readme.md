@@ -128,9 +128,9 @@ make dbt_setup
 ### Setting up Prefect
 
 Use the provided Makefile command to set up Prefect:
-
+```bash
 make prefect_setup
-
+```
 This will:
 
 1.  Start a Prefect server
@@ -142,6 +142,12 @@ This will:
 You will be able to see the deployments of the flows on the **prefect server**: **localhost:4200** where you can see the deployments
 ![alt text](images/image2.png)
 
+if it is a blank page, you might need to stop the server and rerun the commnad above
+
+```bash
+make prefect_stop
+make prefect_setup
+```
 ### Running the Ingestion Pipeline Manually
 
 To run the data ingestion pipeline:
