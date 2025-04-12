@@ -99,6 +99,7 @@ The codebase follows software engineering best practices, including:
 - Separation of orchestration (Prefect), loading (DLT), and transformation (dbt)
 - Cloud-native deployments on GCP with infrastructure-as-code via Makefile
 - Automated testing for dbt models using dbt tests
+- Uses black and isort for formating the python files
 
 ### Prerequisites
 
