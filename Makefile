@@ -24,3 +24,6 @@ bq_dataset:
 
 setup:
 	pipenv install --dev
+quality: 
+black ingestion/*
+isort ingestion/*
